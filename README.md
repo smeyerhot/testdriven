@@ -1,3 +1,3 @@
-# Microservices with Flask, React, and Kubernetes
+# Microservices with Flask, React, and Docker
 
-[![Build Status](https://travis-ci.org/testdrivenio/testdriven-kubernetes-app.svg?branch=master)](https://travis-ci.org/testdrivenio/testdriven-kubernetes-app)
+[![Build Status](https://travis-ci.org/smeyerhot/testdriven.svg?branch=master)](https://travis-ci.org/smeyerhot/testdriven)
