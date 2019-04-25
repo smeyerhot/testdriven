@@ -25,6 +25,8 @@ python services/swagger/update-spec.py http://DOCKER_MACHINE_IP
 
 docker-machine regenerate-certs testdriven-prod  #regenerate certs
 
+budgie_secret_key
+
 
 
 
