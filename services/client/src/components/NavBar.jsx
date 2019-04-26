@@ -26,13 +26,17 @@ const NavBar = (props) => (
           {props.isAuthenticated &&
             <Link to="/status" className="navbar-item">User Status</Link>
           }
+          {/* new */}
+          <a href="/swagger" className="navbar-item">Swagger</a>
         </div>
         <div className="navbar-end">
+          {/* new */}
           {!props.isAuthenticated &&
-            <Link to="/register" className="navbar-item">Register</Link>
-          }
-          {!props.isAuthenticated &&
-            <Link to="/login" className="navbar-item">Log In</Link>
+            <div className="navbar-item">
+              <Link to="/register" className="button is-primary">Register</Link>
+              &nbsp;
+              <Link to="/login" className="button is-link">Log In</Link>
+            </div>
           }
           {props.isAuthenticated &&
             <Link to="/logout" className="navbar-item">Log Out</Link>
