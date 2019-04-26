@@ -5,7 +5,6 @@ services:
 
 env:
   DOCKER_COMPOSE_VERSION: 1.23.2
-  # new
   COMMIT: ${TRAVIS_COMMIT::8}
   MAIN_REPO: https://github.com/smeyerhot/testdriven.git
   USERS: test-driven-users
@@ -31,8 +30,7 @@ before_script:
 script:
   - bash test-ci.sh $TRAVIS_BRANCH
 
-# new
 after_success:
   - bash ./docker-push.sh
-  - bash ./docker-deploy-stage.sh  # new
+  - bash ./docker-deploy-stage.sh  
   - bash ./docker-deploy-prod.sh
