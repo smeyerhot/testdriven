@@ -7,6 +7,7 @@ then
   if [[ "$TRAVIS_BRANCH" == "staging" ]]; then
     export DOCKER_ENV=stage
     export REACT_APP_USERS_SERVICE_URL="http://testdriven-staging-alb-1466309556.us-west-1.elb.amazonaws.com"
+    export REACT_APP_EXERCISES_SERVICE_URL="http://testdriven-staging-alb-1466309556.us-west-1.elb.amazonaws.com"
   elif [[ "$TRAVIS_BRANCH" == "production" ]]; then
     export DOCKER_ENV=prod
     export REACT_APP_USERS_SERVICE_URL="http://testdriven-production-alb-1431400801.us-west-1.elb.amazonaws.com"
@@ -35,9 +36,9 @@ then
     docker tag $USERS:$COMMIT $REPO/$USERS:$TAG
     docker push $REPO/$USERS:$TAG
     # users db
-    # docker build $USERS_DB_REPO -t $USERS_DB:$COMMIT -f Dockerfile
-    # docker tag $USERS_DB:$COMMIT $REPO/$USERS_DB:$TAG
-    # docker push $REPO/$USERS_DB:$TAG
+    docker build $USERS_DB_REPO -t $USERS_DB:$COMMIT -f Dockerfile
+    docker tag $USERS_DB:$COMMIT $REPO/$USERS_DB:$TAG
+    docker push $REPO/$USERS_DB:$TAG
     # client
     docker build $CLIENT_REPO -t $CLIENT:$COMMIT -f Dockerfile-$DOCKER_ENV --build-arg REACT_APP_USERS_SERVICE_URL=$REACT_APP_USERS_SERVICE_URL
     docker tag $CLIENT:$COMMIT $REPO/$CLIENT:$TAG
@@ -46,5 +47,13 @@ then
     docker build $SWAGGER_REPO -t $SWAGGER:$COMMIT -f Dockerfile-$DOCKER_ENV
     docker tag $SWAGGER:$COMMIT $REPO/$SWAGGER:$TAG
     docker push $REPO/$SWAGGER:$TAG
+    # exercises
+    docker build $EXERCISES_REPO -t $EXERCISES:$COMMIT -f Dockerfile-$DOCKER_ENV  # new
+    docker tag $EXERCISES:$COMMIT $REPO/$EXERCISES:$TAG  # new
+    docker push $REPO/$EXERCISES:$TAG  # new
+    # exercises db
+    docker build $EXERCISES_DB_REPO -t $EXERCISES_DB:$COMMIT -f Dockerfile  # new
+    docker tag $EXERCISES_DB:$COMMIT $REPO/$EXERCISES_DB:$TAG  # new
+    docker push $REPO/$EXERCISES_DB:$TAG  # new
   fi
 fi
