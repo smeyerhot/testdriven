@@ -23,10 +23,10 @@ const NavBar = (props) => (
         <div className="navbar-start">
           <Link to="/" className="navbar-item">Home</Link>
           <Link to="/about" className="navbar-item">About</Link>
+          <Link to="/all-users" className="navbar-item">Users</Link>
           {props.isAuthenticated &&
             <Link to="/status" className="navbar-item">User Status</Link>
           }
-          {/* new */}
           <a href="/swagger" className="navbar-item">Swagger</a>
         </div>
         <div className="navbar-end">
