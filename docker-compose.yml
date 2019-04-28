@@ -84,8 +84,8 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - USERS_SERVICE_URL=http://users:5000
       - SECRET_KEY=budgie_secret_key
-      - DATABASE_URL=postgres://postgres:postgres@exercises-db:5432/exercises_dev  # new
-      - DATABASE_TEST_URL=postgres://postgres:postgres@exercises-db:5432/exercises_test  # new
+      - DATABASE_URL=postgres://postgres:postgres@exercises-db:5432/exercises_dev  
+      - DATABASE_TEST_URL=postgres://postgres:postgres@exercises-db:5432/exercises_test  
     depends_on:
       - users
       - exercises-db
