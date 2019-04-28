@@ -27,7 +27,11 @@
         },
         {
           "name": "SECRET_KEY",
+<<<<<<< HEAD
           "value": "my_precious"
+=======
+          "value": "budgie_secret_key"
+>>>>>>> 127f56e480c5317b86a42fd433a98e9577c3e9ba
         }
       ],
       "links": [
