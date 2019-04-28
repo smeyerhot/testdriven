@@ -9,4 +9,4 @@ describe('Swagger', () => {
         expect((el).text()).to.contain(Cypress.env('http://testdriven-staging-alb-1466309556.us-west-1.elb.amazonaws.com'));
       });
   });
-});
+});d
