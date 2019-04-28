@@ -68,6 +68,8 @@ then
       task_template=$(cat "ecs/$template")
       task_def=$(printf "$task_template" $AWS_ACCOUNT_ID $AWS_ACCOUNT_ID)
       echo "$task_def"
+      register_definition
+      update_service  
 
     }
 
