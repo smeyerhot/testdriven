@@ -70,7 +70,6 @@ then
       echo "$task_def"
       register_definition
       update_service  
-
     }
 
     configure_aws_cli
