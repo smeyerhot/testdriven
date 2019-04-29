@@ -8,7 +8,8 @@ import unittest
 import coverage
 from flask.cli import FlaskGroup
 
-from project import create_app, db
+from project import create_app
+from project import db
 from project.api.models import Exercise
 
 
