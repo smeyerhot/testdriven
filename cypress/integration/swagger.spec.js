@@ -4,5 +4,9 @@ describe('Swagger', () => {
       .visit('/')
       .get('.navbar-burger').click()
       .get('a').contains('Swagger').click();
+
+      cy.get('select > option').then((el) => {
+        expect((el).text()).to.contain(Cypress.env('LOAD_BALANCER_DNS_NAME'));
       });
   });
+});
