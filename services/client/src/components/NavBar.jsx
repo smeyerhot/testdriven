@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const NavBar = (props) => (
   // eslint-disable-next-line
@@ -30,7 +31,6 @@ const NavBar = (props) => (
           <a href="/swagger" className="navbar-item">Swagger</a>
         </div>
         <div className="navbar-end">
-          {/* new */}
           {!props.isAuthenticated &&
             <div className="navbar-item">
               <Link to="/register" className="button is-primary">Register</Link>
@@ -46,5 +46,10 @@ const NavBar = (props) => (
     </section>
   </nav>
 )
+
+NavBar.propTypes = {
+  title: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+};
 
 export default NavBar;

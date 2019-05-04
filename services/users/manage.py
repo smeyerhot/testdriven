@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# usr/bin/env python3
 # services/users/manage.py
 
 
@@ -8,8 +8,7 @@ import unittest
 import coverage
 from flask.cli import FlaskGroup
 
-from project import create_app
-from project import db
+from project import create_app, db
 from project.api.models import User
 
 
@@ -39,13 +38,13 @@ def seed_db():
     """Seeds the database."""
     db.session.add(User(
         username='michael',
-        email='michael@reallynotreal.com',
-        password='greaterthaneight'
+        email='tido48@aim.com',
+        password='teodoro
     ))
     db.session.add(User(
         username='michaelherman',
-        email='michael@mherman.org',
-        password='greaterthaneight'
+        email='smeyerhot@gmail.com',
+        password='teodoro'
     ))
     db.session.commit()
 
