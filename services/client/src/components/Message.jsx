@@ -15,5 +15,4 @@ Message.propTypes = {
   messageType: PropTypes.string,
   removeMessage: PropTypes.func.isRequired,
 };
-
 export default Message;

@@ -18,7 +18,7 @@ describe('Exercises', () => {
     cy.server();
     cy.route('POST', 'auth/register').as('createUser');
     cy.route('POST', Cypress.env('REACT_APP_API_GATEWAY_URL')).as('gradeExercise');
-
+  
     // register a new user
     cy
       .visit('/register')
@@ -27,18 +27,22 @@ describe('Exercises', () => {
       .get('input[name="password"]').type(password)
       .get('input[type="submit"]').click()
       .wait('@createUser');
-
+  
     // assert exercises are displayed correctly
     cy
       .get('h1').contains('Exercises')
       .get('.notification.is-success').contains('Welcome!')
       .get('.notification.is-danger').should('not.be.visible')
       .get('button.button.is-primary').contains('Run Code');
-
+  
     // assert user can submit an exercise
+    // new
+    for (let i = 0; i < 23; i++) {
+      cy.get('textarea').type('{backspace}', { force: true })
+    }
     cy
+      .get('textarea').type('def sum(x,y):\nreturn x+y', { force: true })  // new
       .get('button').contains('Run Code').click()
-      .wait(900)
-      .get('h5 > .grade-text').contains('Incorrect!');
+      .wait('@gradeExercise')
+      .get('h5 > .grade-text').contains('Correct!');  // new
   });
-});
