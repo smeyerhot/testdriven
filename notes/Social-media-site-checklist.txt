@@ -1,0 +1,28 @@
+Social Media Application
+
+1) Users:
+
+1. Sign up for an account 
+2. Log into an account 
+3. Post public messages
+4. View the messages they create, and those created by other users.
+
+2) Messages:
+
+1. Messages need to be associated with author.
+
+
+3) Likes:
+
+1. Likes must be associated to user who made the like.
+2. Likes need to be associated with the post that was liked.
+
+
+Pages:
+1. Signup page
+2. Login page
+3. Message page
+4. New message page
+5. Likes page
+
+ççcççÇÇÇÇÇÇççççççççCC˝˝˝˝˝©©©©©©˝˝˝˝˝ÁÁÁÁyy¥¥¥
