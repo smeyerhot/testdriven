@@ -1,8 +1,8 @@
 {
   "containerDefinitions": [
     {
-      "name": "exercises",
-      "image": "%s.dkr.ecr.us-west-1.amazonaws.com/test-driven-exercises:staging",
+      "name": "scores",
+      "image": "%s.dkr.ecr.us-west-1.amazonaws.com/test-driven-scores:staging",
       "essential": true,
       "memoryReservation": 300,
       "portMappings": [
@@ -19,27 +19,35 @@
         },
         {
           "name": "DATABASE_TEST_URL",
-          "value": "postgres://postgres:postgres@exercises-db:5432/exercises_test"
+          "value": "postgres://postgres:postgres@scores-db:5432/scores_test"
         },
         {
           "name": "DATABASE_URL",
-          "value": "postgres://postgres:postgres@exercises-db:5432/exercises_stage"
+          "value": "postgres://postgres:postgres@scores-db:5432/scores_stage"
+        },
+        {
+          "name": "USERS_SERVICE_URL",
+          "value": "http://testdriven-staging-alb-741461415.us-west-1.elb.amazonaws.com"
+        },
+        {
+          "name": "EXERCISES_SERVICE_URL",
+          "value": "http://testdriven-staging-alb-741461415.us-west-1.elb.amazonaws.com"
         }
       ],
       "links": [
-        "exercises-db"
+        "scores-db"
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "testdriven-exercises-stage",
+          "awslogs-group": "testdriven-scores-stage",
           "awslogs-region": "us-west-1"
         }
       }
     },
     {
-      "name": "exercises-db",
-      "image": "%s.dkr.ecr.us-west-1.amazonaws.com/test-driven-exercises_db:staging",
+      "name": "scores-db",
+      "image": "%s.dkr.ecr.us-west-1.amazonaws.com/test-driven-scores_db:staging",
       "essential": true,
       "memoryReservation": 300,
       "portMappings": [
@@ -62,11 +70,11 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "testdriven-exercises_db-stage",
+          "awslogs-group": "testdriven-scores_db-stage",
           "awslogs-region": "us-west-1"
         }
       }
     }
   ],
-  "family": "testdriven-exercises-stage-td"
+  "family": "testdriven-scores-stage-td"
 }

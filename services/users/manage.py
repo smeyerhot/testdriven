@@ -1,4 +1,3 @@
-# usr/bin/env python3
 # services/users/manage.py
 
 
@@ -38,13 +37,13 @@ def seed_db():
     """Seeds the database."""
     db.session.add(User(
         username='michael',
-        email='tido48@aim.com',
-        password='teodoro
+        email='michael@reallynotreal.com',
+        password='greaterthaneight'
     ))
     db.session.add(User(
         username='michaelherman',
-        email='smeyerhot@gmail.com',
-        password='teodoro'
+        email='michael@mherman.org',
+        password='greaterthaneight'
     ))
     db.session.commit()
 

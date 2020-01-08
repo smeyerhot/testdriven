@@ -1,8 +1,8 @@
 {
   "containerDefinitions": [
     {
-      "name": "users",
-      "image": "%s.dkr.ecr.us-west-1.amazonaws.com/test-driven-users:production",
+      "name": "scores",
+      "image": "%s.dkr.ecr.us-west-1.amazonaws.com/test-driven-scores:production",
       "essential": true,
       "memoryReservation": 300,
       "portMappings": [
@@ -19,25 +19,29 @@
         },
         {
           "name": "DATABASE_TEST_URL",
-          "value": "postgres://postgres:postgres@users-db:5432/users_test"
+          "value": "postgres://postgres:postgres@scores-db:5432/scores_test"
         },
         {
           "name": "DATABASE_URL",
           "value": "%s"
         },
         {
-          "name": "SECRET_KEY",
-          "value": "%s"
+          "name": "USERS_SERVICE_URL",
+          "value": "http://testdriven-production-alb-770072310.us-west-1.elb.amazonaws.com"
+        },
+        {
+          "name": "EXERCISES_SERVICE_URL",
+          "value": "http://testdriven-production-alb-770072310.us-west-1.elb.amazonaws.com"
         }
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "testdriven-users-prod",
+          "awslogs-group": "testdriven-scores-prod",
           "awslogs-region": "us-west-1"
         }
       }
     }
   ],
-  "family": "testdriven-users-prod-td"
+  "family": "testdriven-scores-prod-td"
 }

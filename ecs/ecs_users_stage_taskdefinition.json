@@ -27,7 +27,7 @@
         },
         {
           "name": "SECRET_KEY",
-          "value": "budgie_secret_key"
+          "value": "my_precious"
         }
       ],
       "links": [

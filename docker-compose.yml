@@ -15,7 +15,7 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
-      - SECRET_KEY=budgie_secret_key
+      - SECRET_KEY=my_precious
     depends_on:
       - users-db
 
@@ -72,7 +72,7 @@ services:
       - FLASK_ENV=development
       - APP_SETTINGS=project.config.DevelopmentConfig
       - USERS_SERVICE_URL=http://users:5000
-      - SECRET_KEY=budgie_secret_key
+      - SECRET_KEY=my_precious
       - DATABASE_URL=postgres://postgres:postgres@exercises-db:5432/exercises_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@exercises-db:5432/exercises_test
     depends_on:
@@ -102,7 +102,7 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - USERS_SERVICE_URL=http://users:5000
       - EXERCISES_SERVICE_URL=http://exercises:5000
-      - SECRET_KEY=budgie_secret_key
+      - SECRET_KEY=my_precious
       - DATABASE_URL=postgres://postgres:postgres@scores-db:5432/scores_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@scores-db:5432/scores_test
     depends_on:

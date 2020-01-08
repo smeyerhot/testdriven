@@ -1,4 +1,3 @@
-# usr/bin/env python3
 # services/exercises/manage.py
 
 
@@ -71,19 +70,17 @@ def seed_db():
     db.session.add(Exercise(
         body=('Define a function called reverse that takes a string as '
               'an argument and returns the string in reversed order.'),
-        test_code='reverse("racecar")',  # new
+        test_code='reverse("racecar")',
         test_code_solution='racecar'
     ))
     db.session.add(Exercise(
         body=('Define a function called factorial that takes a random number '
               'as an argument and then returns the factorial of that given '
               'number.'),
-        test_code='factorial(5)',  # new
+        test_code='factorial(5)',
         test_code_solution='120'
     ))
     db.session.commit()
-
-
 
 
 if __name__ == '__main__':
