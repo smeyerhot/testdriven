@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.7
 # services/users/project/__init__.py
 
 

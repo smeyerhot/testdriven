@@ -21,6 +21,10 @@ dev() {
   inspect $? exercises
   docker-compose exec exercises flake8 project
   inspect $? exercises-lint
+  docker-compose exec scores python manage.py test
+  inspect $? scores
+  docker-compose exec scores flake8 project
+  inspect $? scores-lint
   docker-compose exec client npm test -- --coverage
   inspect $? client
   docker-compose down
@@ -30,7 +34,7 @@ dev() {
 e2e() {
   docker-compose -f docker-compose-stage.yml up -d --build
   docker-compose -f docker-compose-stage.yml exec users python manage.py recreate_db
-  ./node_modules/.bin/cypress run --config baseUrl=http://localhost --env REACT_APP_API_GATEWAY_URL=https://eq9oax74xe.execute-api.us-west-1.amazonaws.com/v1/execute #,LOAD_BALANCER_STAGE_DNS_NAME=http://testdriven-staging-alb-1466309556.us-west-1.elb.amazonaws.com
+  ./node_modules/.bin/cypress run --config baseUrl=http://localhost --env REACT_APP_API_GATEWAY_URL=$REACT_APP_API_GATEWAY_URL,LOAD_BALANCER_DNS_NAME=$LOAD_BALANCER_DNS_NAME
   inspect $? e2e
   docker-compose -f docker-compose-$1.yml down
 }

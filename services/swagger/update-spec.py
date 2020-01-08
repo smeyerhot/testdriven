@@ -17,6 +17,6 @@ if __name__ == '__main__':
     try:
         update_json_file(sys.argv[1])
     except IndexError:
-        print('http://testdriven-staging-alb-1466309556.us-west-1.elb.amazonaws.com')
+        print('Please provide a URL.')
         print('USAGE: python update-spec.py URL')
         sys.exit()
