@@ -1,0 +1,193 @@
+
+docker-machine create --driver amazonec2 --amazonec2-keypair-name my-ec2-keys --amazonec2-ssh-keypath ~/.ssh/my-ec2-keys.pem testdriven-prod
+
+docker-machine create --driver amazonec2 testdriven-prod
+Set docker machine to production env:
+
+docker-machine env testdriven-prod
+
+eval $(docker-machine env testdriven-prod)
+
+eval $(docker-machine env -u)
+
+export REACT_APP_USERS_SERVICE_URL=http://localhost
+
+ export REACT_APP_API_GATEWAY_URL=https://eq9oax74xe.execute-api.us-west-1.amazonaws.com/v2/execute
+
+export REACT_APP_EXERCISES_SERVICE_URL=http://localhost
+
+docker-compose -f docker-compose-prod.yml up -d --build
+
+docker-compose -f docker-compose-prod.yml exec users python manage.py recreate_db
+docker-compose -f docker-compose-prod.yml exec exercises python manage.py recreate_db
+docker-compose -f docker-compose-prod.yml exec scores python manage.py recreate_db
+
+ docker-compose -f docker-compose-prod.yml exec users python manage.py seed_db
+
+ docker-compose -f docker-compose-prod.yml exec exercises python manage.py seed_db
+
+ docker-compose -f docker-compose-prod.yml exec scores python manage.py seed_db
+
+ docker-compose -f docker-compose-prod.yml exec users python manage.py seed_db
+
+ docker-compose -f docker-compose-prod.yml exec users python manage.py test
+
+ docker-compose -f docker-compose-prod.yml exec users flake8 project
+
+./node_modules/.bin/cypress open --config baseUrl=http://DOCKER_MACHINE_PROD_IP
+
+
+Force a build:
+
+docker-compose build --no-cache
+
+Remove images:
+
+docker rmi $(docker images -q)
+
+eval $(docker-machine env -u)
+
+ENV
+remember to deactivate nvm
+
+Containerization procedure:
+
+docker-compose -f docker-compose.yml up -d --build
+
+cd .
+
+//sets up a new database otherwise: "server error"
+"exec runs command in new container"
+
+
+docker-compose -f docker-compose.yml exec users python manage.py recreate_db
+
+
+
+* docker-compose -f docker-compose.yml up -d --build nginx (runs nginx container)
+
+
+
+docker-compose -f docker-compose.yml exec client npm test -- --verbose
+
+
+
+docker-compose down (bring down containers)
+
+
+test coverage 
+docker-compose exec exercises python manage.py cov
+
+
+python services/swagger/update-spec.py http://DOCKER_MACHINE_IP
+#server inside docker environment
+
+
+docker-machine regenerate-certs testdriven-prod  #regenerate certs
+
+SECRET_KEY=budgie_secret_key
+
+
+
+
+The -d flag is used to run containers in the background.
+
+ Create an ECS repo 
+aws ecr create-repository --repository-name REPOSITORY_NAME --region us-west-1
+
+
+
+
+AWS
+(inside ssh)
+
+> docker exec -it Container_ID bash
+
+# python manage.py recreate_db
+# python manage.py seed_db
+
+
+
+checking rds status:
+
+aws --region us-west-1 rds describe-db-instances \
+  --db-instance-identifier testdriven-production \
+  --query 'DBInstances[].{DBInstanceStatus:DBInstanceStatus}'
+
+once available, grab address:
+aws --region us-west-1 rds describe-db-instances \
+  --db-instance-identifier testdriven-production \
+  --query 'DBInstances[].{Address:Endpoint.Address}'
+
+
+"Address": "testdriven-production.cpxs0mqm6xse.us-west-1.rds.amazonaws.com"
+
+
+production URI: postgres://webapp:n06du22m@testdriven-production.cpxs0mqm6xse.us-west-1.rds.amazonaws.com:5432/users_prod
+
+exercises:
+postgres://webapp:n06du22m@testdriven-exercises-production.cpxs0mqm6xse.us-west-1.rds.amazonaws.com:5432/exercises_prod
+
+
+
+So, instead of running an entrypoint file, we are now just running Gunicorn. Why? Well, first off, we will not be using a users-db container in production. Also, we only want to create the database and seed it once, rather than on every deploy, to persist the
+ data.
+
+
+WORKFLOW:
+For each component, you'll want to follow this workflow:
+
+Development:
+
+Create a new feature branch from the master branch
+Write tests, ensuring they fail (red)
+Update code
+Run the tests again, ensuring they pass (green)
+Refactor (if necessary)
+Commit and push your code up to GitHub
+After the build passes, open a PR against the development branch to trigger a new build on Travis
+Merge the PR after the build passes
+Staging:
+
+Open PR from the development branch against the staging branch to trigger a new build on Travis
+Merge the PR after the build passes to trigger a new build
+After the build passes, images are created, tagged staging, and pushed to ECR, revisions are added to the Task Definitions, and the Service is updated
+Production:
+
+Open PR from the staging branch against the production branch to trigger a new build on Travis
+Merge the PR after the build passes to trigger a new build
+After the build passes, images are created, tagged production, and pushed to ECR, revisions are added to the Task Definitions, and the Service is updated
+Merge the changes into the master branch
+
+
+
+update swagger.json --> python services/swagger/update-spec.py http://localhost
+
+
+lambda
+It's a good idea to move long-running processes outside of the direct HTTP request/response cycle to improve performance of the web app. This is typically handled by Redis or RabbitMQ along with Celery in the Python world. We're going to take a different approach with AWS Lambda.
+
+
+
+API gateway url https://eq9oax74xe.execute-api.us-west-1.amazonaws.com/v1/execute
+curl -H "Content-Type: application/json" -X POST \
+  -d '{"answer":"def sum(x,y):\n    return x+y"}' \
+https://eq9oax74xe.execute-api.us-west-1.amazonaws.com/v1/execute
+
+
+ curl -H "Content-Type: application/json" -X POST \
+https://eq9oax74xe.execute-api.us-west-1.amazonaws.com/v1/execute \
+-d @- << EOF
+
+{
+    "answer": "def sum(x,y):\n    return x+y",
+    "test": "sum(20, 30)",
+    "solution": "50"
+}
+EOF
+
+
+staging: ssh -i ~/.ssh/ecs-west.pem ec2-user@13.56.140.121
+prod: ssh -i ~/.ssh/ecs-west.pem ec2-user@18.144.38.208
+
+
