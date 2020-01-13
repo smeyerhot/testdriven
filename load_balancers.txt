@@ -1,0 +1,2 @@
+http://testdriven-staging-alb-778741164.us-west-1.elb.amazonaws.com; fi
+  - if [[ "$TRAVIS_BRANCH" == "production" ]]; then export LOAD_BALANCER_DNS_NAME=http://testdriven-production-alb-2051568987.us-west-1.elb.amazonaws.com

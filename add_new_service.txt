@@ -1,0 +1,4 @@
+mkdir temp
+unzip base.zip -d temp
+
+mv temp/base services/new_folder

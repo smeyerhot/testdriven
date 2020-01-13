@@ -44,8 +44,8 @@ services:
       - REACT_APP_API_GATEWAY_URL=${REACT_APP_API_GATEWAY_URL}
       - REACT_APP_EXERCISES_SERVICE_URL=${REACT_APP_EXERCISES_SERVICE_URL}
       - REACT_APP_SCORES_SERVICE_URL=${REACT_APP_SCORES_SERVICE_URL}
-    depends_on:
-      - users
+    
+      
 
   swagger:
     build:
@@ -130,3 +130,42 @@ services:
     depends_on:
       - users
       - client
+
+  task_queue:
+    build: ./services/task_queue
+    # image: task_queue
+    # container_name: task_queue
+    ports:
+      - 5004:5000
+    volumes:
+      - './services/task_queue:/usr/src/app'
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_ENV=development
+      - APP_SETTINGS=project.config.DevelopmentConfig
+
+
+  # worker:
+  #   image: task_queue
+  #   command: python manage.py run_worker
+  #   volumes:
+  #     - ./services/task_queue:/usr/src/app
+  #   environment:
+  #     - FLASK_APP=project/__init__.py
+  #     - FLASK_ENV=development
+  #     - APP_SETTINGS=project.config.DevelopmentConfig
+  #   depends_on:
+  #     - redis
+
+  # redis:
+  #   image: redis:5.0.7-alpine
+
+  # dashboard:
+  #   build: ./services/task_queue/project/dashboard
+  #   image: dashboard
+  #   container_name: dashboard
+  #   ports:
+  #     - 9181:9181
+  #   command: rq-dashboard -H redis
+  #   depends_on:
+  #     - redis
