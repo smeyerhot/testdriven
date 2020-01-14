@@ -18,7 +18,9 @@ RUN chmod +x /usr/src/app/entrypoint.sh
 # copy project
 COPY . /usr/src/app
 EXPOSE 5004
+EXPOSE 9181
 
+CMD ["rq-dashboard"]
 CMD python manage.py run -h 0.0.0.0
 # run server
 # CMD ["/usr/src/app/entrypoint.sh"]
