@@ -1,6 +1,6 @@
 # Microservices with Docker, Flask, and React
 
-[![Build Status](https://travis-ci.org/testdrivenio/testdriven-app-2.5.svg?branch=master)](https://travis-ci.org/testdrivenio/testdriven-app-2.5)
+[![Build Status](https://travis-ci.org/smeyerhot/testdriven.svg?branch=master)](https://travis-ci.org/smeyerhot/testdriven)
 
 
-[https://testdriven.io](https://testdriven.io)
+[https://teodoromeyerhoff.com](https://teodoromeyerhoff.com)
