@@ -1,5 +1,5 @@
 # base image
-FROM python:3.8.0-alpine
+FROM python:3.7.2-slim
 
 
 
@@ -18,6 +18,11 @@ RUN chmod +x /usr/src/app/entrypoint.sh
 # copy project
 COPY . /usr/src/app
 EXPOSE 5004
+RUN pip install rq-dashboard
+
+EXPOSE 9181
+
+CMD ["rq-dashboard"]
 EXPOSE 9181
 
 CMD ["rq-dashboard"]

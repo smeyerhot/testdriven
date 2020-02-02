@@ -124,6 +124,11 @@ class App extends Component {
                       isAuthenticated={this.state.isAuthenticated}
                     />
                   )} />
+                  <Route exact path='/chat' render={() => (
+                    <UserStatus
+                      isAuthenticated={this.state.isAuthenticated}
+                    />
+                  )} />
                 </Switch>
               </div>
             </div>

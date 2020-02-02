@@ -5,10 +5,10 @@ import os
 
 from flask import Flask
 from flask_bootstrap import Bootstrap
-
+from flask_cors import CORS  
 # instantiate the extensions
 bootstrap = Bootstrap()
-
+cors = CORS()  # new
 
 def create_app(script_info=None):
 

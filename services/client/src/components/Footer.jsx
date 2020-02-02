@@ -6,7 +6,7 @@ const Footer = (props) => (
   <footer className="footer">
     <div className="container">
       <small className="has-text-grey">
-        <span>Copyright 2019 <a href="http://testdriven.io">TestDriven.io</a>.</span>
+        {/* <span>Copyright 2019 <a href="">TestDriven.io</a>.</span> */}
       </small>
     </div>
   </footer>

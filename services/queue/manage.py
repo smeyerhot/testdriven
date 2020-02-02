@@ -10,6 +10,7 @@ from project import create_app
 
 
 app = create_app()
+
 cli = FlaskGroup(create_app=create_app)
 
 
@@ -29,7 +30,6 @@ def run_worker():
     with Connection(redis_connection):
         worker = Worker(app.config["QUEUES"])
         worker.work()
-
 
 if __name__ == "__main__":
     cli()

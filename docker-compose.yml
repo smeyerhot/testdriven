@@ -120,26 +120,39 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  nginx:
-    build:
-      context: ./services/nginx
-      dockerfile: Dockerfile
-    restart: always
+  chat:
+    build: ./services/chat
+    image: chat
+    container_name: chat
     ports:
-      - 80:80
-    depends_on:
-      - task_queue
-      - users
-      - client
+      - 5005:5000
+    volumes:
+      - './services/chat:/usr/src/app'
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_ENV=development
 
-  task_queue:
-    build: ./services/task_queue
-    image: task_queue
-    container_name: task_queue
+  people:
+    build: ./services/people
+    image: people
+    container_name: people
+    ports:
+      - 5006:5000
+    volumes:
+      - './services/people:/usr/src/app'
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_ENV=development
+      # - APP_SETTINGS=project.config.DevelopmentConfig
+  
+  queue:
+    build: ./services/queue
+    image: queue
+    container_name: queue
     ports:
       - 5004:5000
     volumes:
-      - './services/task_queue:/usr/src/app'
+      - './services/queue:/usr/src/app'
     environment:
       - FLASK_APP=project/__init__.py
       - FLASK_ENV=development
@@ -147,10 +160,10 @@ services:
 
 
   worker:
-    image: task_queue
+    image: queue
     command: python manage.py run_worker
     volumes:
-      - './services/task_queue:/usr/src/app'
+      - './services/queue:/usr/src/app'
     environment:
       - APP_SETTINGS=project.config.DevelopmentConfig
     depends_on:
@@ -161,7 +174,7 @@ services:
     image: redis:5.0.7-alpine
 
   dashboard:
-    build: ./services/task_queue
+    build: ./services/dashboard
     image: dashboard
     container_name: dashboard
     ports:
@@ -169,3 +182,30 @@ services:
     command: rq-dashboard -H redis
     depends_on:
       - redis
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - queue
+      - users
+      - client
+      - chat 
+      - exercises
+      - scores
+      - dashboard
+      - people
+      - mongo
+
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: mongo_secret
