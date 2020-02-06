@@ -1,4 +1,10 @@
-FROM python:3.7.2-alpine
+# base image
+FROM python:3.7.2-slim
+
+# install netcat
+RUN apt-get update && \
+    apt-get -y install netcat && \
+    apt-get clean
 
 # set working directory
 WORKDIR /usr/src/app
@@ -7,8 +13,13 @@ WORKDIR /usr/src/app
 COPY ./requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r requirements.txt
 
+# add entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
 # add app
 COPY . /usr/src/app
-EXPOSE 5003
+
 # run server
-CMD python manage.py run -h 0.0.0.0
+CMD ["/usr/src/app/entrypoint.sh"]
+# run server

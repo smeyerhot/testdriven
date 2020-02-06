@@ -11,14 +11,17 @@ import UserStatus from './components/UserStatus';
 import Message from './components/Message';
 import Footer from './components/Footer';
 import Exercises from './components/Exercises';
+import Chatroom from './components/Chatroom';
+import Movie from './components/Movie';
 
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
+      movies: [],
       users: [],
-      title: 'TestDriven.io',
+      title: 'Learn To Code',
       isAuthenticated: false,
       messageName: null,
       messageType: null,
@@ -35,10 +38,18 @@ class App extends Component {
   };
   componentDidMount() {
     this.getUsers();
+    this.getMovies();
   };
+
+
   getUsers() {
     axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`)
     .then((res) => { this.setState({ users: res.data.data.users }); })
+    .catch((err) => { });
+  };
+  getMovies() {
+    axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/people`)
+    .then((res) => { this.setState({ users: res.data.data.movies }); })
     .catch((err) => { });
   };
   logoutUser() {
@@ -67,6 +78,22 @@ class App extends Component {
     });
   };
   render() {
+    // const { error, isLoaded, items } = this.state;
+    // if (error) {
+    //   return <div>Error: {error.message}</div>;
+    // } else if (!isLoaded) {
+    //   return <div>Loading...</div>;
+    // } else {
+
+    //     <ul>
+    //       {items.map(item => (
+    //         <li key={item.name}>
+    //           {item.name} {item.price}
+    //         </li>
+    //       ))}
+    //     </ul>
+    // }
+  
     return (
       <div>
         <NavBar
@@ -97,6 +124,16 @@ class App extends Component {
                     />
                   )} />
                   <Route exact path='/about' component={About}/>
+                  <Route exact path='/movies' render={() => (
+                    <Movie
+                      // movies={this.state.movies}
+                      />
+                  )} />
+                  <Route exact path='/chatroom' render={() => (
+                    <Chatroom
+                    contacts={this.state.contacts}
+                      />
+                  )} />
                   <Route exact path='/register' render={() => (
                     <Form
                       formType={'Register'}
@@ -124,11 +161,7 @@ class App extends Component {
                       isAuthenticated={this.state.isAuthenticated}
                     />
                   )} />
-                  <Route exact path='/chat' render={() => (
-                    <UserStatus
-                      isAuthenticated={this.state.isAuthenticated}
-                    />
-                  )} />
+          
                 </Switch>
               </div>
             </div>

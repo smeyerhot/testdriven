@@ -133,18 +133,32 @@ services:
       - FLASK_ENV=development
 
   people:
-    build: ./services/people
-    image: people
-    container_name: people
-    ports:
-      - 5006:5000
+    build: 
+      context: ./services/people
+      dockerfile: Dockerfile
     volumes:
       - './services/people:/usr/src/app'
+    ports:
+      - 5006:8000
     environment:
-      - FLASK_APP=project/__init__.py
       - FLASK_ENV=development
-      # - APP_SETTINGS=project.config.DevelopmentConfig
-  
+      - FLASK_RUN_PORT=8000
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@people-db:5432/people_dev  # new
+      - DATABASE_TEST_URL=postgres://postgres:postgres@people-db:5432/people_test  # new
+    depends_on:  # new
+      - people-db
+
+  people-db:  # new
+    build:
+      context: ./services/people/project/db
+      dockerfile: Dockerfile
+    ports:
+      - 5439:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
   queue:
     build: ./services/queue
     image: queue
