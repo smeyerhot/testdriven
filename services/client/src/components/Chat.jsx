@@ -1,21 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 
-const Chat = (props) => {
+let endPoint = "http://localhost:5005";
+let socket = io.connect(`${endPoint}`);
+
+const Chat = () => {
+  const [messages, setMessages] = useState(["Hello And Welcome"]);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    getMessages();
+  }, [messages.length]);
+
+  const getMessages = () => {
+    socket.on("message", msg => {
+      //   let allMessages = messages;
+      //   allMessages.push(msg);
+      //   setMessages(allMessages);
+      setMessages([...messages, msg]);
+    });
+  };
+
+  // On Change
+  const onChange = e => {
+    setMessage(e.target.value);
+  };
+
+  // On Click
+  const onClick = () => {
+    if (message !== "") {
+      socket.emit("message", message);
+      setMessage("");
+    } else {
+      alert("Please Add A Message");
+    }
+  };
+
   return (
     <div>
-      <center><h1>Contact List</h1></center>
-      {props.movies.map((movie) => (
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{props.movie.name}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{props.contact.email}</h6>
-            <p class="card-text">{props.contact.company.catchPhrase}</p>
+      {messages.length > 0 &&
+        messages.map(msg => (
+          <div>
+            <p>{msg}</p>
           </div>
-        </div>
-      ))}
+        ))}
+      <input value={message} name="message" onChange={e => onChange(e)} />
+      <button onClick={() => onClick()}>Send Message</button>
     </div>
-  )
-
-}
+  );
+};
 
 export default Chat;

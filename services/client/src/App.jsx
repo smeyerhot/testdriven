@@ -8,10 +8,10 @@ import NavBar from './components/NavBar';
 import Form from './components/forms/Form';
 import Logout from './components/Logout';
 import UserStatus from './components/UserStatus';
-import Message from './components/Message';
+
 import Footer from './components/Footer';
 import Exercises from './components/Exercises';
-import Chatroom from './components/Chatroom';
+import Chat from './components/Chat';
 import Movie from './components/Movie';
 
 
@@ -23,13 +23,10 @@ class App extends Component {
       users: [],
       title: 'Learn To Code',
       isAuthenticated: false,
-      messageName: null,
-      messageType: null,
     };
     this.logoutUser = this.logoutUser.bind(this);
     this.loginUser = this.loginUser.bind(this);
-    this.createMessage = this.createMessage.bind(this);
-    this.removeMessage = this.removeMessage.bind(this);
+
   };
   componentWillMount() {
     if (window.localStorage.getItem('authToken')) {
@@ -38,7 +35,7 @@ class App extends Component {
   };
   componentDidMount() {
     this.getUsers();
-    this.getMovies();
+
   };
 
 
@@ -47,11 +44,7 @@ class App extends Component {
     .then((res) => { this.setState({ users: res.data.data.users }); })
     .catch((err) => { });
   };
-  getMovies() {
-    axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/people`)
-    .then((res) => { this.setState({ users: res.data.data.movies }); })
-    .catch((err) => { });
-  };
+
   logoutUser() {
     window.localStorage.clear();
     this.setState({ isAuthenticated: false });
@@ -62,21 +55,8 @@ class App extends Component {
     this.getUsers();
     this.createMessage('Welcome!', 'success');
   };
-  createMessage(name='Sanity Check', type='success') {
-    this.setState({
-      messageName: name,
-      messageType: type
-    });
-    setTimeout(() => {
-      this.removeMessage();
-    }, 3000);
-  };
-  removeMessage() {
-    this.setState({
-      messageName: null,
-      messageType: null
-    });
-  };
+
+
   render() {
     // const { error, isLoaded, items } = this.state;
     // if (error) {
@@ -102,13 +82,7 @@ class App extends Component {
         />
         <section className="section">
           <div className="container">
-            {this.state.messageName && this.state.messageType &&
-              <Message
-                messageName={this.state.messageName}
-                messageType={this.state.messageType}
-                removeMessage={this.removeMessage}
-              />
-            }
+
             <div className="columns">
               <div className="column is-half">
                 <br/>
@@ -129,9 +103,9 @@ class App extends Component {
                       // movies={this.state.movies}
                       />
                   )} />
-                  <Route exact path='/chatroom' render={() => (
-                    <Chatroom
-                    contacts={this.state.contacts}
+                  <Route exact path='/chat' render={() => (
+                    <Chat
+                    
                       />
                   )} />
                   <Route exact path='/register' render={() => (

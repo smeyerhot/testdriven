@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_restful import Resource, Api
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send
 from flask_cors import CORS  
 
 # instantiate the extensions

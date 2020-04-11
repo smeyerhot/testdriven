@@ -44,7 +44,7 @@ services:
       - REACT_APP_API_GATEWAY_URL=${REACT_APP_API_GATEWAY_URL}
       - REACT_APP_EXERCISES_SERVICE_URL=${REACT_APP_EXERCISES_SERVICE_URL}
       - REACT_APP_SCORES_SERVICE_URL=${REACT_APP_SCORES_SERVICE_URL}
-    
+
       
 
   swagger:
@@ -165,13 +165,16 @@ services:
     container_name: queue
     ports:
       - 5004:5000
+    command: python manage.py run -h 0.0.0.0
     volumes:
       - './services/queue:/usr/src/app'
     environment:
+      - FLASK_DEBUG=1
       - FLASK_APP=project/__init__.py
       - FLASK_ENV=development
       - APP_SETTINGS=project.config.DevelopmentConfig
-
+    depends_on:
+      - redis
 
   worker:
     image: queue
@@ -223,3 +226,4 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo_user
       MONGO_INITDB_ROOT_PASSWORD: mongo_secret
+

@@ -22,8 +22,8 @@ RUN pip install rq-dashboard
 
 EXPOSE 9181
 
-CMD ["rq-dashboard"]
-EXPOSE 9181
+# CMD ["rq-dashboard"]
+# EXPOSE 9181
 
 CMD ["rq-dashboard"]
 CMD python manage.py run -h 0.0.0.0

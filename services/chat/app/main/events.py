@@ -1,7 +1,12 @@
 from flask import session
 from flask_socketio import emit, join_room, leave_room
-from .. import socketio
+from .. import socketio, send
 
+@socketio.on("message")
+def handleMessage(msg):
+    print(msg)
+    send(msg, broadcast=True)
+    return None
 
 # @socketio.on('joined', namespace='/chat/chatroom')
 @socketio.on('joined', namespace='/chat')

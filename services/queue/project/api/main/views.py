@@ -6,17 +6,17 @@ from flask import render_template, Blueprint, jsonify, request, current_app
 
 
 from project.api.main.tasks import create_task
-main_blueprint = Blueprint("main", __name__, template_folder='../../client/templates', static_folder='../../client/static')
+main_blueprint = Blueprint("main", __name__,)
 
 
-@main_blueprint.route("/queue", methods=["GET"])
+@main_blueprint.route("/", methods=["GET"])
 def home():
     return render_template("main/home.html")
 
 
 
 
-@main_blueprint.route("/queue/tasks", methods=["POST"])
+@main_blueprint.route("/tasks", methods=["POST"])
 def run_task():
     task_type = request.form["type"]
     with Connection(redis.from_url(current_app.config["REDIS_URL"])):
@@ -31,7 +31,7 @@ def run_task():
     return jsonify(response_object), 202
 
 
-@main_blueprint.route("/queue/tasks/<task_id>", methods=["GET"])
+@main_blueprint.route("/tasks/<task_id>", methods=["GET"])
 def get_status(task_id):
     with Connection(redis.from_url(current_app.config["REDIS_URL"])):
         q = Queue()
